@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Eletronic Games</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+              crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+              integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+              crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="menu-item bg-dark mb-3 navbar navbar-expand-md">
+
+
+            <a href="/" class="menu-item menu-link active btn btn-dark fa fa-gamepad"> EletronicGames</a>
+
+            <a href="/login" sec:authorize="!isAuthenticated()" class="btn btn-dark  ml-auto"><i
+                    class="fas">Login</i></a>
+
+
+            <a href="/usuario/cadastro" sec:authorize="!isAuthenticated()" class="btn btn-dark  "><i
+                    class="fas">Cadastre-se</i></a>
+
+            
+                <div sec:authorize="isAuthenticated()" class="btn btn-dark ml-auto nav-link dropdown-toggle" data-toggle="dropdown">   
+                    <h3 > [[${#httpServletRequest.remoteUser}]]</h3>
+
+                     <div class="dropdown-menu">
+                    <form th:action="@{/logout}"  method="post" sec:authorize="isAuthenticated()">
+                        <button type="submit" class="btn btn-dark dropdown-item"><i class="fas"> Logout</i></button>
+                    </form>
+                </div>
+             </div>
+        </div>
+
+
+        <div th:switch="${jogos}" class="container my-5">
+            <div>
+                <div sec:authorize="isAuthenticated()">
+
+                    <h4>Você pode adicionar quantos jogos quiser e ainda analisar os jogos dos gamers!!!</h4>
+
+                </div>
+
+                <p class="my-5 row p-5">
+                    <a href="/jogos/cadastrar" sec:authorize="isAuthenticated()" class="btn btn-dark"><i> Adicionar Jogo</i></a>
+                </p>
+
+
+                <div class="col-md-10">
+
+                    <h2 th:case="null" class="row p-3"> Nenhum GAME cadastrado!</h2>
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th>Nota</th>
+                                    <th>Editar</th>
+                                    <th>Remover</th>
+                                    <th>Adicionar Avaliação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <span th:each="jogo : ${jogos}">   
+                                <tr>
+                                    <td th:text="${jogo.codJogo}"></td>
+                                    <td th:text="${jogo.nome}"></td>
+                                    <td th:text="${jogo.descricao}"></td>
+                                    <td th:text="${jogo.nota}"></td>
+                                    <td><a th:href="@{/jogos/editar/{codJogo}(codJogo=${jogo.codJogo})}"><i>Editar</i></a>
+                                    </td>
+                                    <td><a th:href="@{/jogos/remover/{codJogo}(codJogo=${jogo.codJogo})}"><i>Remover</i></a></td>
+                                   
+                                    <td><a th:href="@{/jogos/cadastrar/avaliacao/{codJogo}(codJogo=${jogo.codJogo})}"><i>Adicionar Avaliação</i></a></td>
+                                </tr>
+                                
+                           <tr th:if="${#lists.size(jogo.avaliacoes)>0}">
+                                <table class="table table-striped table-responsive-md">
+                            <thead>
+                                <tr>
+                                  
+                                    <th>Comentário</th>
+                                    <th>Nota</th>
+                                    <th>Gostei</th>
+                                    <th>Não Gostei</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr th:each="avaliacao : ${jogo.avaliacoes}">
+                                    
+                                    <td th:text="${avaliacao.comentario}"></td>
+                                    <td th:text="${avaliacao.nota}"></td>
+                                    <td th:text="${avaliacao.gostei}"></td>
+                                    <td th:text="${avaliacao.naoGostei}"></td>
+                                    
+                                </tr>
+                               
+                            </tbody>
+                          </table>
+                                </tr>
+                           
+                                </span>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+    </body>
+</html>

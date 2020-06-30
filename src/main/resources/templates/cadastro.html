@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cadastre-se</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+              integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+              crossorigin="anonymous">
+        <link rel="stylesheet"
+              href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+              integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+              crossorigin="anonymous">
+        <link href="bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+
+        <div class="menu-item bg-dark mb-3 navbar navbar-expand-md-8">
+
+            <a href="/" class="menu-item menu-link active btn btn-dark">EletronicGames</a>
+
+        </div>
+
+        <div th:if="${param.success}">
+            <div>Cadastro efetuado com sucesso!</div>
+        </div>
+
+        <form th:action="@{/usuario/cadastro}" th:object="${usuario}" method="post">
+
+            <div class="container ">
+
+                <h1 class="d-flex justify-content-center"> CADASTRO</h1>
+
+                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto ">
+                    <div class="card card-signin my-5 ">
+                        <div class="card-body">
+
+                            <div class="row p-2">
+                                <label for="nome"></label>
+                                <input class="form-control btn-outline-dark" id="nome" th:field="*{nome}" placeholder="Nome" required/>  
+                            </div>
+
+                            <div class="row p-2">
+                                <label for="email"> </label>
+                                <input class="form-control btn-outline-dark" id="email" th:field="*{email}" placeholder="E-mail" required/>  
+                            </div>
+
+                            <div class="row p-2">
+                                <label for="login"> </label>
+                                <input class="form-control btn-outline-dark" id="login" th:field="*{login}" placeholder="Login"required/>  
+                            </div>
+
+                            <div class="row p-2">
+                                <label  for="senha" ></label>
+                                <input class="form-control btn-outline-dark" type="password" name="password" th:field="*{senha}" placeholder="Senha" required/>  
+                            </div>
+
+                            <div class="row p-2"> 
+                                <input class="btn btn-dark d-flex w-100 justify-content-center" type="submit" value="Cadastre-se">
+                            </div>
+
+                            <div class="row p-2 d-flex justify-content-center">
+                                <span> Já é cadastrado? <a href="/login"> Faça seu login aqui </a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>  
+    </body>
+</html>
